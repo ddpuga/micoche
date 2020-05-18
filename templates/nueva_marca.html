@@ -1,0 +1,43 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+    <script>
+        function check() {
+            const edNombre = document.getElementById("edNombre");
+            const edPais = document.getElementById("edPais");
+            const edFoto = document.getElementById("edFoto");
+
+            var toret = false;
+
+            if (edNombre.value.trim().length > 0 && edPais.value.trim().length > 0 && edFoto.value.trim().length > 0)
+            {
+                toret = true;
+            }
+            return toret;
+        }
+
+    </script>
+<body>
+<h2 class="font-weight-light mt-3 ml-2">Añade una marca</h2>
+<div class="container mt-5">
+        <form id="formMarca"
+              action="/marcas/nueva"
+              enctype="multipart/form-data"
+              method="post"
+              onsubmit="return check()">
+            <div class="form-group">
+            <label for="edNombre">Nombre: </label>
+            <input class="form-control" type="text" id="edNombre" name="edNombre"/><br>
+            </div>
+            <div class="form-group">
+            <label for="edPais">País: </label>
+            <input class="form-control" type="text" id="edPais" name="edPais"/><br>
+            </div>
+            <div class="form-group">
+            <label for="edFoto">Foto del logo (png en la carpeta static del proyecto): </label>
+            <input type="file" id="edFoto" name="edFoto"/>
+            </div>
+            <input type="submit" class="btn btn-success" value="Guardar marca" />
+        </form>
+</div>
+{% endblock %}

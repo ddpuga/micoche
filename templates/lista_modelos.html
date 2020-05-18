@@ -1,0 +1,45 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+<div class="row mt-0 ml-2">
+    <div><img style="width: 200px; height: 200px;" src="/img?edFoto={{ marca.key.urlsafe() }}"></div>
+    <div class="col-lg-1"></div>
+    <div class="form-group">
+        <h3 class="mt-5"><span><i class="fas fa-car"></i></span> {{marca.nombre}}</h3>
+        <h3 class="mt-2"><span><i class="far fa-flag"></i></span> {{marca.pais}}</h3>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="form-group mt-5">
+        <p>
+            <a href="/coches/nuevo?mar={{ marca.key.urlsafe() }}">
+                <button type="button" class="btn btn-info">Añade un modelo</button>
+            </a>
+        </p>
+        <p>
+            <a href="/marcas/elimina?id={{ marca.key.urlsafe() }}">
+                <button type="button" class="btn btn-danger">Elimina esta marca</button>
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="container ml-4 mt-2">
+{% if coches.count() > 0 %}
+{% for coche in coches %}
+<div class="row">
+    <div class="card bg-light mr-3 text-center" style="width: 13rem;">
+        <a href="/comentarios/lista?coc={{ coche.key.urlsafe() }}">
+            <div><img class="img-fluid" src="/imgnuevo?edFotoNuevo={{ coche.key.urlsafe() }}"></div>
+        </a>
+        <div class="card-body">
+            <p class="card-text"><b>{{coche.modelo}}</b> ({{coche.ano}})</p>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+    {% else %}
+    <p><b>No hay modelos registrados</b></p>
+    {% endif %}
+</div>
+</div>
+    {% endblock %}

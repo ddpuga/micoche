@@ -1,0 +1,65 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+<script>
+    function check() {
+        const edModelo = document.getElementById("edModelo");
+        const edAno = document.getElementById("edAno");
+        const edMecanicas = document.getElementById("edMecanicas");
+        const edFotoNuevo = document.getElementById("edFotoNuevo");
+        const edFotoUsado = document.getElementById("edFotoUsado");
+        const edLinkUsado = document.getElementById("edLinkUsado");
+        const edLinkNuevo = document.getElementById("edLinkNuevo");
+
+
+        var toret = false;
+
+        if (edModelo.value.trim().length > 0 && edMecanicas.value.trim().length > 0 && edFotoNuevo.value.trim().length > 0 && edFotoUsado.value.trim().length > 0
+            && edLinkNuevo.value.trim().length > 0 && edLinkUsado.value.trim().length > 0 && edAno.value.trim().length > 0) {
+            toret = true;
+        }
+        return toret;
+    }
+
+</script>
+</head>
+<body>
+<h2 class="font-weight-light mt-3 ml-2">Añade un modelo</h2>
+<div class="container mt-5">
+<form id="formModelo"
+      action="/coches/nuevo?mar={{ clave_marca }}"
+      method="post"
+      enctype="multipart/form-data"
+      onsubmit="return check()">
+    <div class="form-group">
+        <label for="edModelo">Modelo: </label>
+        <input class="form-control" type="text" id="edModelo" name="edModelo"/>
+    </div>
+    <div class="form-group">
+        <label for="edMecanicas">Mecanicas disponibles: </label>
+        <input class="form-control" type="text" id="edMecanicas" name="edMecanicas"/>
+    </div>
+    <div class="form-group">
+        <label for="edAno">Año: </label>
+        <input class="form-control" type="number" id="edAno" name="edAno" min="1900" step="1"/>
+    </div>
+    <div class="form-group">
+        <label for="edFotoNuevo">Foto oficial del coche: </label>
+        <input type="file" id="edFotoNuevo" name="edFotoNuevo"/>
+    </div>
+    <div class="form-group">
+        <label for="edFotoUsado">Foto del coche usado: </label>
+        <input type="file" id="edFotoUsado" name="edFotoUsado"/>
+    </div>
+    <div class="form-group">
+        <label for="edLinkNuevo">Link al configurador oficial del coche: </label>
+        <input class="form-control" type="text" id="edLinkNuevo" name="edLinkNuevo"/>
+    </div>
+    <div class="form-group">
+        <label for="edLinkUsado">Link a venta de segunda mano del coche</label>
+        <input class="form-control" type="text" id="edLinkUsado" name="edLinkUsado"/>
+    </div>
+    <input type="submit" class="btn btn-success" value="Guardar modelo"/>
+</form>
+</div>
+{% endblock %}

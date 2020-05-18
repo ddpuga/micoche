@@ -1,0 +1,69 @@
+application: micoche
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /
+  script: handlers.main.app
+
+- url: /static
+  static_dir: static
+
+- url: /hello
+  script: handlers.respuesta.app
+  login: required
+
+- url: /marcas/nueva
+  script: handlers.marcas.nueva.app
+
+- url: /comentarios/nuevo
+  script: handlers.comentarios.nuevo.app
+
+- url: /comentarios/elimina
+  script: handlers.comentarios.elimina.app
+
+- url: /marcas/elimina
+  script: handlers.marcas.elimina.app
+
+- url: /coches/elimina
+  script: handlers.coches.elimina.app
+
+- url: /guardados/elimina
+  script: handlers.guardados.elimina.app
+
+- url: /coches/lista
+  script: handlers.coches.lista.app
+
+- url: /guardados/lista
+  script: handlers.guardados.lista.app
+
+- url: /guardados/nuevo
+  script: handlers.guardados.nuevo.app
+
+- url: /coches/nuevo
+  script: handlers.coches.nuevo.app
+
+- url: /img
+  script: handlers.marcas.image.app
+
+- url: /imgnuevo
+  script: handlers.coches.ImageNuevo.app
+
+- url: /imgusado
+  script: handlers.coches.ImageUsado.app
+
+- url: /comentarios/lista
+  script: handlers.comentarios.lista.app
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+
+- name: jinja2
+  version: "latest"

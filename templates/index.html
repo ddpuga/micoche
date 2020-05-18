@@ -1,0 +1,66 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+
+{% if usr %}
+<div class="row">
+    <h2 class="font-weight-light ml-4 mt-2">Marcas</h2>
+    <div class="col-lg-7"></div>
+        <div class="mt-2 ml-5">
+            <a href="/guardados/lista">
+                <button type="button" class="btn btn-warning">Coches guardados</button>
+            </a>
+            <a href="/marcas/nueva">
+                <button type="button" class="btn btn-info">Añade una marca</button>
+            </a>
+            <a href="{{url_usr}}" xmlns="http://www.w3.org/1999/html">
+                <button type="button" class="btn btn-outline-danger">Logout</button>
+            </a>
+    </div>
+</div>
+<div class="container ml-4 mt-2">
+    <div class="row">
+        {% if marcas.count() > 0 %}
+        {% for marca in marcas %}
+        <div class="card bg-light mr-3 mt-2 text-center" style="width: 13rem;">
+            <a href="/coches/lista?mar={{ marca.key.urlsafe() }}">
+                <div><img class="img-fluid" src="/img?edFoto={{ marca.key.urlsafe() }}"></div>
+            </a>
+            <div class="card-body">
+                <p class="card-text"><b>{{marca.nombre}}</b></p>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+    {% else %}
+    <p><b>No hay marcas registradas</b></p>
+    {% endif %}
+</div>
+{% else %}
+<div class="container mt-5">
+    <div class="row">
+        <h2>Haz login para utilizar TodoCoches!</h2>
+        <a href="{{url_usr}}">
+            <button type="button" class="btn btn-success">Únete!</button>
+        </a>
+    </div>
+</div>
+{% endif %}
+
+
+<script>
+    function check() {
+        const edMensaje = document.getElementById("edMensaje");
+        const edTipo = document.getElementById("edTipo");
+
+        var toret = false;
+
+        if (edMensaje.value.trim().length > 0 && edTipo.value.trim().length > 0) {
+            toret = true;
+        }
+        return toret;
+    }
+
+</script>
+{% endblock %}

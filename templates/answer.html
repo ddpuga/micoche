@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TodoCoches</title>
+</head>
+<body>
+
+    {% if comentarios.count() > 0 %}
+    <ul>
+        {% for comentario in comentarios %}
+        <li>{{ comentario.hora }} - {{comentario.tipo}} - {{comentario.mensaje}}
+            {% if comentario.email %} ({{comentario.email}}) {% endif %}</li>
+        <a href="/comentarios/elimina?id={{comentario.key.urlsafe()}}">Eliminar</a>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p><b>No hay comentarios todavía</b></p>
+    {% endif %}
+
+</body>
+</html>

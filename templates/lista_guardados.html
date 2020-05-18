@@ -1,0 +1,28 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+<h3 class="font-weight-light mt-2 ml-4">Coches guardados</h3>
+<div class="container ml-4 mt-4">
+    {% if coches|length > 0 %}
+    {% for coche in coches %}
+    <div class="row">
+        <div class="card bg-light mr-3 text-center" style="width: 13rem;">
+            <a href="/comentarios/lista?coc={{ coche.key.urlsafe() }}">
+                <div><img class="img-fluid" src="/imgnuevo?edFotoNuevo={{ coche.key.urlsafe() }}"></div>
+            </a>
+            <div class="card-body">
+                <p class="card-text"><b>{{coche.modelo}}</b> ({{coche.ano}})</p>
+                <a href="/guardados/elimina?id={{ coche.key.urlsafe() }}">
+                <button type="button" class="btn btn-danger btn-sm">Quitar</button>
+            </a>
+            </div>
+
+        </div>
+        <br>
+        {% endfor %}
+        {% else %}
+        <p><b>No hay modelos registrados</b></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "esqueleto.html" %}
+
+{% block contenido %}
+<script>
+    function check() {
+        const edMensaje = document.getElementById("edMensaje");
+        const edTipo = document.getElementById("edTipo");
+
+        var toret = false;
+
+        if (edMensaje.value.trim().length > 0 && edTipo.value.trim().length > 0) {
+            toret = true;
+        }
+        return toret;
+    }
+
+</script>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="row ml-2">
+        <div class="form-group">
+            <h3 class="ml-2"><span><i class="fas fa-car"></i></span> {{coche.modelo}}</h3>
+            <h3 class="mt-2 ml-2"><span><i class="fas fa-gas-pump"></i></span> {{coche.mecanicas}}</h3>
+            <br>
+            <a class="mt-2" href="/coches/elimina?id={{ coche.key.urlsafe() }}">
+                <button type="button" class="btn btn-danger">Elimina este modelo</button>
+            </a>
+            <br>
+            <div class="mt-2"></div>
+            <a class="mt-2" href="/guardados/nuevo?id={{ coche.key.urlsafe() }}">
+                <button type="button" class="btn btn-warning">Guardar coche</button>
+            </a>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="card bg-light mr-3 text-center" style="width: 13rem;">
+            <h4>Configurar</h4>
+            <a href="{{coche.linknuevo}}">
+                <div><img class="img-fluid" src="/imgnuevo?edFotoNuevo={{ coche.key.urlsafe() }}"></div>
+            </a>
+        </div>
+        <div class="card bg-light mr-3 text-center" style="width: 13rem;">
+            <h4>Ocasión</h4>
+            <a href="{{coche.linkusado}}">
+                <div><img class="img-fluid" src="/imgusado?edFotoUsado={{ coche.key.urlsafe() }}"></div>
+            </a>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <h2>Añadir comentario</h2>
+    <form id="formComentario"
+          action="/comentarios/nuevo?coc={{ coche.key.urlsafe() }}"
+          method="post"
+          onsubmit="return check()">
+        <label for="edTipo">Tipo: </label>
+        <select class="form-control" id="edTipo" name="edTipo">
+            <option>General</option>
+            <option>Avería</option>
+            <option>Opinión</option>
+            <option>Duda</option>
+            <option>Otro</option>
+        </select>
+        <br>
+        <textarea class="form-control" id="edMensaje" name="edMensaje" rows="4" cols="80"
+                  placeholder="Introduce aquí tu comentario"/></textarea>
+        <br>
+        <input type="submit" class="btn btn-info" value="Guardar comentario"/>
+        </p>
+    </form>
+    {% if comentarios.count() > 0 %}
+    {% for comentario in comentarios %}
+    <div class="card">
+        <div class="card-header">
+            ({{comentario.email}}) a las {{ comentario.hora }}
+            <div class="float-right">
+                {% if comentario.email == email %}
+                <a href="/comentarios/elimina?id={{comentario.key.urlsafe()}}&coc={{ coche.key.urlsafe() }}">
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </a>
+                {% else %}
+                {% endif %}
+            </div>
+            </div>
+        <div class="card-body">
+            <h5 class="card-title">{{comentario.tipo}}</h5>
+            <p class="card-text">{{comentario.mensaje}}</p>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+    {% else %}
+    <p><b>No hay comentarios todavía</b></p>
+    {% endif %}
+</div>
+
+{% endblock %}
